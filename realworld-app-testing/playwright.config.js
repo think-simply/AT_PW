@@ -11,15 +11,15 @@ const { defineConfig, devices } = require('@playwright/test');
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
-  testDir: './tests',
+  testDir: './fixtures',
   /* Run tests in files in parallel */
-  fullyParallel: true,
+  fullyParallel: true, // không có quyền override workers
   /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.CI,
+  forbidOnly: !!process.env.CI, // check tất cả file testcase, có file nào có test.only ko, nếu ko thì CI/CD sẽ báo lỗi- chỉ dùng khi bộ testsuite tích hợp vs CICD
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers:  3, //process.env.CI ? 4 : 2 , - nếu mà vế trước mà đúng thì chạy 4 workers, còn nếu sai thì chạy 2 workers
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -47,16 +47,34 @@ module.exports = defineConfig({
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
     },
+// hoặc dùng thế này:
+    // {
+    //   name: 'dev',
+    //   use: { 
+    //     baseURL: 'https://dev.realworld.io'
+    //    },
+    // },
+
+    // {
+    //   name: 'staging',
+    //   use: { 
+    //     baseURL: 'https://staging.realworld.io'
+    //    },
+    // },
+    // // sau đó gọi test trên môi trường chỉ định như này: npx playwright test --projects=staging
+
 
     /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
+    {
+      name: 'Mobile Chrome',
+      use: { ...devices['Pixel 5'] },
+    },
+    {
+      name: 'Iphone 15',
+      use: { 
+        ...devices['iPhone 15 Pro Max'] 
+      },
+    },
 
     /* Test against branded browsers. */
     // {
