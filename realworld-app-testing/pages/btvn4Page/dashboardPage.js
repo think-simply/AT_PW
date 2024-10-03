@@ -82,7 +82,7 @@ class DashBoardPage {
                     modifiedAt: "2024-03-07T19:37:59.120Z"
 
                 })
-            await route.fulfill({ response, json })
+            await route.fulfill({ response, json });
         });
     }
     /**
