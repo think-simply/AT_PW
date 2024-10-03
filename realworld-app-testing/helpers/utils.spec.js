@@ -1,7 +1,7 @@
 //các function được sử dụng chung và nhiều giữa các file.js
-export const generateUniqueNumber =() =>{
+
 // get random number
-const getUniqueNumber = () => {
+export const getUniqueNumber = () => {
     const now = new Date();
     const year = now.getFullYear();
     const month = (now.getMonth() + 1)
@@ -14,8 +14,37 @@ const getUniqueNumber = () => {
   
     return uniqueNumber;
   }
-  }
-  export const retry = () => {
-    // function here
+  // để lại để tham khảo
+  //   export const retry = () => {
+  //   // function here
 
-  }
+  // }
+  
+
+  // const customRetries = async(page,locator,attempts,retryNumber) => {
+  //   while(attempts < retryNumber){
+  //     try {
+  //     await expect(locator).toBeVisible()
+  //     break;
+  //     } catch(e){
+  //       attempts++;
+  //       if (attempts > retryNumber){
+  //         throw e
+  //       }
+  
+  //       await page.waitForTimeout(1000)
+  
+  //     }
+  
+  //   }
+  // }
+  
+  // export async function retry(){
+    
+  // }
+  
+  // /**
+  //  * Helper functions for realworld-app-testing
+  //  * 
+  //  * 
+  //  * * */

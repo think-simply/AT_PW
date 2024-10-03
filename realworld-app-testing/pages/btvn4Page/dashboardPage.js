@@ -1,14 +1,30 @@
 const { expect } = require('@playwright/test');
-const LOCATORS = require('../../selectors/hw4Selectors/loginSelector');
+import {
+    logoutLocator,
+    notificationButton,
+} from "../../selectors/hw4Selectors/dashboardSelector"
+
 
 class DashBoardPage {
     constructor(page) {
         this.page = page;
     }
+    /**
+     * navigate to notification page
+     */
     async openNotifications() {
-        await this.page.click(LOCATORS.notificationButton);
+        await this.page.click(notificationButton);
     }
-
+    /**
+     * verify Login successfully
+     */
+    async verifyLoginSuccess() {
+        await expect(this.page.getByText(logoutLocator)).toBeVisible({ timeout: 10000 });
+    }
+    /**
+     * 
+     * @param {String} username 
+     */
     async filterNotifications(username) {
         await this.page.route('http://localhost:3002/notifications', async route => {
             const response = await route.fetch();
@@ -18,6 +34,9 @@ class DashBoardPage {
             await route.fulfill({ response, json });
         });
     }
+    /**
+     * push additional results to API
+     */
     async pushAdditionalResults() {
         await this.page.route('http://localhost:3002/notifications', async route => {
             const response = await route.fetch();
@@ -66,12 +85,15 @@ class DashBoardPage {
             await route.fulfill({ response, json })
         });
     }
-
+    /**
+     * verify add more result sucsessfully
+     */
     async checkAddResultsSuccess() {
         expect(this.page.getByText('Theu kate liked a transaction.')).toBeVisible();
         expect(this.page.getByText('Phuong kate liked a transaction.')).toBeVisible();
         expect(this.page.getByText('Hoa kate liked a transaction.')).toBeVisible();
     }
+
 }
 
 module.exports = { DashBoardPage };

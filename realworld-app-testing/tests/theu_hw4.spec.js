@@ -1,7 +1,6 @@
 const { test } = require('@playwright/test');
 const LoginPage = require('../pages/btvn4Page/loginPage');
 const DashBoardPage = require('../pages/btvn4Page/dashboardPage');
-const LOCATORS = require('../selectors/hw4Selectors/loginSelector');
 import {
   USERNAME,
   PASSWORD
